@@ -26,7 +26,7 @@ resource "azurerm_network_security_rule" "badclick_org_allow_k8s_api" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "6443"
-  source_address_prefix       = "*" # Allow from only trusted sources
+  source_address_prefix       = "85.223.72.147/32" # Allow from only trusted sources
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.badclick_org_rg.name
   network_security_group_name = azurerm_network_security_group.badclick_org_nsg.name
