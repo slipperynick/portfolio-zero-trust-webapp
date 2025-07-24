@@ -24,7 +24,7 @@ resource "azurerm_kubernetes_cluster" "badclick_org_aks" {
   }
 
   role_based_access_control_enabled = true
-  kubernetes_version                = "1.29.2"
+  kubernetes_version                = "1.32.5"
 }
 
 output "client_certificate" {
