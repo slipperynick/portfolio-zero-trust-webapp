@@ -1,0 +1,22 @@
+- todotree
+- live server
+- pytests
+- implement trivy into github actions
+- implement checko into github actions
+- implement oidc github > azure authentication
+- kubernetes setup
+  - kyverno
+    - pod security standards
+  - cert manager
+  - nginx ingress controller / trafeik
+  - trivy operator
+  - external secrets operator
+  - falco or kubearmor
+  - kubebench
+  - lens
+- flux cd
+- prometheus
+- grafana
+- terragrunt
+
+Done
