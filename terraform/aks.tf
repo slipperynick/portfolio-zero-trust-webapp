@@ -15,13 +15,15 @@ resource "azurerm_kubernetes_cluster" "badclick_org_aks" {
     type = "SystemAssigned"
   }
 
-  tags = {
-    Environment = "Production"
-  }
+network_profile {
+  network_plugin     = "azure"
+  service_cidr       = "10.100.0.0/16"
+  dns_service_ip     = "10.100.0.10"
+}
 
-  network_profile {
-    network_plugin = "azure"
-  }
+tags = {
+  Environment = "Production"
+}
 
   role_based_access_control_enabled = true
   kubernetes_version                = "1.32.5"
