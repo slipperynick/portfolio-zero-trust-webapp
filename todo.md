@@ -14,7 +14,6 @@
   - falco or kubearmor
   - kubebench
   - lens
-- flux cd
 - prometheus
 - grafana
 - terragrunt
@@ -27,4 +26,6 @@
 - SDLC
 
 Done
+Kubernetes setup
 - k9s
+- flux cd
