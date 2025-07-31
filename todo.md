@@ -18,5 +18,13 @@
 - prometheus
 - grafana
 - terragrunt
+- kubecolor
+- k9s
+- kubectl-who-can (by Aqua Security)
+- rakkess --user <your-username>
+- starship
+- bitami sealed secret
+- kubeseal
+- SDLC
 
 Done
