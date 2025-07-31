@@ -19,7 +19,6 @@
 - grafana
 - terragrunt
 - kubecolor
-- k9s
 - kubectl-who-can (by Aqua Security)
 - rakkess --user <your-username>
 - starship
@@ -28,3 +27,4 @@
 - SDLC
 
 Done
+- k9s
