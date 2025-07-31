@@ -24,6 +24,7 @@
 - bitami sealed secret
 - kubeseal
 - SDLC
+- setup flux git webhook
 
 Done
 Kubernetes setup
