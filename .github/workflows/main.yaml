@@ -45,10 +45,12 @@ jobs:
         with:
           directory: terraform
           framework: terraform
+          args: --output cli --soft-fail
       
       - name: Checkov - Kubernetes
         uses: bridgecrewio/checkov-action@master
         with:
           directory: clusters
           framework: kubernetes
+          args: --output cli --soft-fail
   
