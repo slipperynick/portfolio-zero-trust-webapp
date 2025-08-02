@@ -2,7 +2,7 @@
 - live server
 - pytests
 - implement trivy into github actions
-- implement checko into github actions
+- implement checkov into github actions
 - implement oidc github > azure authentication
 - kubernetes setup
   - kyverno
@@ -24,10 +24,13 @@
 - kubeseal
 - SDLC
 - setup flux git webhook
+- terrafor app service account creation
 
 Done
-Kubernetes setup
-- k9s
-- flux cd
-- ingress controller setup
-- checkov against terraform and kubernetes manifests
+- checkov into github actions
+- oidc between tfcloud > azure
+- Kubernetes setup
+  - k9s
+  - flux cd
+  - ingress controller setup
+  - checkov against terraform and kubernetes manifests
