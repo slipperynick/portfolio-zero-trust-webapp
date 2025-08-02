@@ -8,7 +8,6 @@
   - kyverno
     - pod security standards
   - cert manager
-  - nginx ingress controller / trafeik
   - trivy operator
   - external secrets operator
   - falco or kubearmor
@@ -30,3 +29,5 @@ Done
 Kubernetes setup
 - k9s
 - flux cd
+- ingress controller setup
+- checkov against terraform and kubernetes manifests

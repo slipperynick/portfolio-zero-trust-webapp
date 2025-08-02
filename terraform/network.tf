@@ -58,6 +58,7 @@ resource "azurerm_virtual_network" "badclick_org_vnet" {
   }
 }
 
+# This is a comment
 resource "azurerm_subnet" "badclick_org_subnet1" {
   name                 = "badclick_org_subnet1"
   resource_group_name  = azurerm_resource_group.badclick_org_rg.name
