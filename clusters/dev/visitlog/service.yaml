@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: visitlog
+  namespace: visitlog
+  labels:
+    app: visitlog
+    environment: dev
+    tier: backend
+    managed-by: kustomize
+    created-by: kustomize
+spec:
+  selector:
+    app: visitlog
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
