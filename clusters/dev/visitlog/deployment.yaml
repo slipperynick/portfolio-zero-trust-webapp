@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visitlog
+  namespace: visitlog
+  labels:
+    app: visitlog
+    environment: dev
+    tier: backend
+    managed-by: kustomize
+    created-by: kustomize
+    version: v1.0.0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: visitlog
+  template:
+    metadata:
+      labels:
+        app: visitlog
+        environment: dev
+        tier: backend
+        managed-by: kustomize
+        created-by: kustomize
+        version: v1.0.0
+    spec:
+      containers:
+        - name: visitlog
+          image: nginx
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: visitlog-config
+                  key: DATABASE_URL
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: visitlog-config
+                  key: LOG_LEVEL
+            - name: FEATURE_FLAG
+              valueFrom:
+                configMapKeyRef:  
+                  name: visitlog-config
+                  key: FEATURE_FLAG
+            - name: MAX_RETRIES
+              valueFrom:
+                configMapKeyRef:
+                  name: visitlog-config
+                  key: MAX_RETRIES
+            - name: RETRY_DELAY
+              valueFrom:
+                configMapKeyRef:
+                  name: visitlog-config
+                  key: RETRY_DELAY
+            - name: TIMEOUT
+              valueFrom:
+                configMapKeyRef:
+                  name: visitlog-config
+                  key: TIMEOUT
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: visitlog-secret
+                  key: SECRET_KEY
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"

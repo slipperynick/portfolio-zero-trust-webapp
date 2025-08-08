@@ -1,7 +1,4 @@
 # Items to TODO
-- todotree
-
-- live server
 - pytests
 - implement trivy into github actions
 - implement checkov into github actions
@@ -14,11 +11,9 @@
   - external secrets operator
   - falco or kubearmor
   - kubebench
-  - lens
 - prometheus
 - grafana
 - terragrunt
-- kubecolor
 - kubectl-who-can (by Aqua Security)
 - rakkess --user <your-username>
 - starship
@@ -26,13 +21,17 @@
 - kubeseal
 - SDLC
 - setup flux git webhook
-- terrafor app service account creation
+- terraform app service account creation
+- calico / flannel
+
 
 Done
-- checkov into github actions
+- terraform fmt on github actions workflow
+- checkov into github actions workflow
 - oidc between tfcloud > azure
 - Kubernetes setup
   - k9s
+  - kubecolor
   - flux cd
   - ingress controller setup
   - checkov against terraform and kubernetes manifests
