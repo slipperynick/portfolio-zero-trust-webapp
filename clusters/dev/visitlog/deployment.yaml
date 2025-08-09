@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: visitlog
-          image: nginx
+          image: tinyp/visitlog:v0.1
           ports:
             - containerPort: 80
           env:
