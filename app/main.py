@@ -26,4 +26,4 @@ async def add_visit(req: Request):
 
 @app.get("/visits")
 def list_visits():
-    return {"count": len(visits), "items": visits[-50:]}  # last 50
+    return {"count": len(visits), "items": visits[-50:]}
