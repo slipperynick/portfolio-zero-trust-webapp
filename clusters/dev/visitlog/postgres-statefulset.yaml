@@ -43,7 +43,7 @@ spec:
         app: postgres
     spec:
       nodeSelector:
-      storage: "local"
+        kubernetes.io/hostname: "minikube"
       containers:
         - name: postgres
           image: postgres:16
