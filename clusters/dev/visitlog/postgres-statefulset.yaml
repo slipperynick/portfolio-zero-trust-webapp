@@ -7,7 +7,7 @@ type: Opaque
 stringData:
   POSTGRES_DB: visitlogdb
   POSTGRES_USER: visituser
-  POSTGRES_PASSWORD: supersecret  # change this
+  POSTGRES_PASSWORD: supersecret  
 
 ---
 apiVersion: v1
@@ -18,7 +18,7 @@ metadata:
 labels:
   app: postgres
 spec:
-  clusterIP: None  # Headless for StatefulSet DNS
+  clusterIP: None 
   ports:
     - port: 5432
       name: postgres
