@@ -42,6 +42,8 @@ spec:
       labels:
         app: postgres
     spec:
+      nodeSelector:
+      storage: "local"
       containers:
         - name: postgres
           image: postgres:16
