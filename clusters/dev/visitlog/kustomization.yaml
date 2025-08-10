@@ -10,3 +10,4 @@ resources:
   - ingress.yaml
   - configmap.yaml
   - secret.yaml
+  - postgres-statefulset.yaml
