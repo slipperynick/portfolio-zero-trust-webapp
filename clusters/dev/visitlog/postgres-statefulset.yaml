@@ -1,16 +1,4 @@
 apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-secret
-  namespace: visitlog
-type: Opaque
-stringData:
-  POSTGRES_DB: visitlogdb
-  POSTGRES_USER: visituser
-  POSTGRES_PASSWORD: supersecret  
-
----
-apiVersion: v1
 kind: Service
 metadata:
   name: postgres
