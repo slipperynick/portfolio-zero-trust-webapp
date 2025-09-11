@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/app"         # where requirements.txt or pyproject.toml lives
+    schedule:
+      interval: "weekly"
+
+  # Docker image base
+  - package-ecosystem: "docker"
+    directory: "/app"         # Dockerfile
+    schedule:
+      interval: "weekly"

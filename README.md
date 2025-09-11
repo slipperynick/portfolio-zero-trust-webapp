@@ -37,7 +37,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
   - DDoS Protection → *Cloudflare DDoS*
   - Patch & hygiene management → *Azure Update Manager*
   - (Optional) Defender for SQL/Storage for data-layer protection
-  - (Wish-listed due to cost): Azure Firewall, Azure WAF, Microsoft Defender for Cloud (CSPM + CWPP), Azure DDoS protection
+  - 🔒💸 (Wish-listed due to cost): Azure Firewall, Azure WAF, Microsoft Defender for Cloud (CSPM + CWPP), Azure DDoS protection
 
 ---
 
@@ -172,7 +172,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
 
 ---
 
-## 📌 Summary
+## Summary
 
 This lab demonstrates how to apply **Zero Trust principles across all pillars** in a modern SaaS platform:  
 - **Identity** (Entra ID, RBAC, OIDC federation)  
@@ -182,4 +182,3 @@ This lab demonstrates how to apply **Zero Trust principles across all pillars** 
 - **Data** (Key Vault, storage encryption)  
 - **Visibility & Response** (Defender for Cloud, SIEM, alerts, SOAR)  
 
-It is intended as a **hands-on, reference implementation** for cloud-native security, not just a homelab.
