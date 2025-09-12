@@ -1,4 +1,4 @@
-name: terraform-ci
+name: security-ci
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkov - Terraform
         uses: bridgecrewio/checkov-action@master
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkov - Kubernetes
         uses: bridgecrewio/checkov-action@master
@@ -54,3 +54,35 @@ jobs:
           framework: kubernetes
           soft_fail: true
           output_format: cli
+
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write   # needed to upload SARIF to Code Scanning
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Semgrep
+        run: pip install --upgrade semgrep
+
+      - name: Run Semgrep (OSS rules)
+        # advisory like Checkov; remove 'continue-on-error' to make it blocking
+        continue-on-error: true
+        run: |
+          semgrep scan \
+            --config p/ci \
+            --config p/python \
+            --config p/terraform \
+            --config p/kubernetes \
+            --config p/docker \
+            --config p/github-actions \
+            --sarif > semgrep.sarif
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif

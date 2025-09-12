@@ -115,11 +115,14 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
   - ✅ Sync configured (manifests pulled into cluster)
 
 **Secure SDLC practices**
-- Dependency scanning (Dependabot, Trivy)  
-- Static analysis (Semgrep, CodeQL)  
-- Secret scanning (GitHub Advanced Security)  
+- ✅ Dependency scanning with Github Dependabot
+- Static analysis (SAST)
+  - ✅ Enable Github CodeQL (GitHub Advanced Security for public repo)
+  - ✅ Enable Semgrep scan on repo 
+- ✅ Enable Secret scanning (GitHub Advanced Security for public repo)
+- (Optional) Block secrets being pushed to Github repo
 - (Optional) Align to SLSA (Supply-chain Levels for Software Artifacts)
-
+- (Optional) Trivy for dependency scanning
 - (Optional) terragrunt for DRY multi-environment Terraform
 
 ---
@@ -182,3 +185,6 @@ This lab demonstrates how to apply **Zero Trust principles across all pillars** 
 - **Data** (Key Vault, storage encryption)  
 - **Visibility & Response** (Defender for Cloud, SIEM, alerts, SOAR)  
 
+## References
+- [Semgrep ruleset](https://semgrep.dev/r)
+- [Github CodeQL](https://codeql.github.com)
