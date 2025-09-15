@@ -22,7 +22,7 @@ jobs:
           terraform_version: 1.5.7
 
       - name: Terraform Format Check
-        working-directory: terraform
+        working-directory: infra/azure/env/dev
         run: terraform fmt -check
 
   checkov-terraform:
@@ -35,7 +35,7 @@ jobs:
       - name: Checkov - Terraform
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: terraform
+          directory: infra/azure/env/dev
           framework: terraform
           soft_fail: true
           output_format: cli
