@@ -1,5 +1,5 @@
 # Zero Trust – Web Application (Security) Stack
-*A Zero Trust blueprint for building a modern cloud-native SaaS application on Azure.*
+*A Zero Trust blueprint for building a modern cloud-native SaaS application infrastructure on Azure with security guardrails built.*
 
 ---
 
@@ -108,7 +108,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
   - ✅ `terraform format` on pull requests  
   - ✅ `checkov` scan on pull requests
   - `tf-plan` on pull requests  
-  - `tf-apply` gated on approval  
+  - ✅ `tf-apply` gated on approval  (currently on Terraform Cloud)
   - App build/test → scan → sign → deploy  
 
 - GitOps: ***FluxCD***
@@ -118,7 +118,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
 - ✅ Dependency scanning with Github Dependabot
 - Static analysis (SAST)
   - ✅ Enable Github CodeQL (GitHub Advanced Security for public repo)
-  - ✅ Enable Semgrep scan on repo 
+  - ✅ Enable Semgrep scan on repo
 - ✅ Enable Secret scanning (GitHub Advanced Security for public repo)
 - (Optional) Block secrets being pushed to Github repo
 - (Optional) Align to SLSA (Supply-chain Levels for Software Artifacts)
@@ -160,7 +160,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
   - Rate limiting  
   - WAF integration at ingress for app endpoints  
 
-- Dependency vulnerability management (Dependabot, Trivy)
+- ✅ Dependency vulnerability management (Dependabot)
 
 ---
 
