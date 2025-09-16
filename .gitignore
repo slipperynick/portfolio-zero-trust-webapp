@@ -1,0 +1,24 @@
+# Terraform state
+*.tfstate
+*.tfstate.backup
+crash.log
+
+# Sensitive or generated files
+.terraform/
+.terraform.lock.hcl
+
+# Override files
+terraform.tfvars
+*.tfvars
+
+# Optional: log output
+*.log
+
+# Local override files (optional)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# macOS
+.DS_Store
