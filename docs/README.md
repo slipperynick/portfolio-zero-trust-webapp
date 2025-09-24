@@ -32,9 +32,9 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
   - ✅ Network Segmentation → *Azure NSGs*
   - ✅ Secrets/Certificate Management → *Azure Key Vault*
   - Secure Configuration / Compliance → *Azure Policy (CIS/NIST initiatives)*
-  - Web Application Security → *Cloudflare WAF*
+  - ✅ Web Application Security → *Cloudflare WAF*
+  - ✅ DDoS Protection → *Cloudflare DDoS*
   - CSPM → *Prowler for Azure*
-  - DDoS Protection → *Cloudflare DDoS*
   - Patch & hygiene management → *Azure Update Manager*
   - (Optional) Defender for SQL/Storage for data-layer protection
   - 🔒💸 (Wish-listed due to cost): Azure Firewall, Azure WAF, Microsoft Defender for Cloud (CSPM + CWPP), Azure DDoS protection

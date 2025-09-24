@@ -2,11 +2,14 @@ name: security-ci
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+
+# Required for OIDC (and safe generally)
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   validate:
@@ -60,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write   # needed to upload SARIF to Code Scanning
+      security-events: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -69,7 +72,6 @@ jobs:
         run: pip install --upgrade semgrep
 
       - name: Run Semgrep (OSS rules)
-        # advisory like Checkov; remove 'continue-on-error' to make it blocking
         continue-on-error: true
         run: |
           semgrep scan \
@@ -86,3 +88,25 @@ jobs:
         if: always()
         with:
           sarif_file: semgrep.sarif
+
+  azure-oidc-auth-test:
+    name: Azure OIDC auth (smoke test)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (optional)
+        uses: actions/checkout@v4
+
+      - name: Azure login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # Use the official CLI action to ensure 'az' is available
+      - name: Show current account (whoami)
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az account show --output table
+            az account get-access-token --resource https://management.azure.com/ --query expiresOn -o tsv
