@@ -149,7 +149,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
   - Cosign image signing & verification  
 
 - Admission controls  
-  - Kyverno verifyImages → only signed workloads deployed  
+  - Kyverno verify images → only signed workloads deployed  
 
 - In-cluster communication  
   - Optional service mesh (Istio, Linkerd) for mTLS and policy between services  
@@ -167,9 +167,9 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
 ### 7. Developer / Ops Tooling  
 *(Not security-critical, but improves operator productivity)*
 
-- **starship** → modern shell prompt with Kubernetes context awareness  
-- **kubecolor** → colorized `kubectl` output  
-- **k9s** → terminal UI for Kubernetes clusters  
+- ✅ **starship** → modern shell prompt with Kubernetes context awareness  
+- ✅ **kubecolor** → colorized `kubectl` output  
+- ✅ **k9s** → terminal UI for Kubernetes clusters  
 - **rakkess** → RBAC permissions matrix view  
 - **kubectl-who-can** → check “who can do X” in RBAC  
 
@@ -188,3 +188,4 @@ This lab demonstrates how to apply **Zero Trust principles across all pillars** 
 ## References
 - [Semgrep ruleset](https://semgrep.dev/r)
 - [Github CodeQL](https://codeql.github.com)
+- [Github Azure OIDC](https://github.com/Azure/login?tab=readme-ov-file#login-with-openid-connect-oidc-recommended)
