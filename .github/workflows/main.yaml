@@ -5,11 +5,27 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  # Enables manual runs from the Actions tab (on-demand)
+  workflow_dispatch:
+    inputs:
+      frameworks:
+        description: "Prowler frameworks (comma-separated). e.g. cis_azure,nist_800_53_rev5"
+        required: false
+        default: "cis_azure"
+      resource_groups:
+        description: "Optional: Limit to specific RGs (comma-separated)"
+        required: false
+        default: ""
+      fail_on_findings:
+        description: "Fail job if High/Critical findings exist?"
+        required: false
+        default: "false"
 
 # Required for OIDC (and safe generally)
 permissions:
   id-token: write
   contents: read
+  security-events: write  # needed to upload SARIF to Code Scanning
 
 jobs:
   validate:
@@ -18,12 +34,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.7
-
       - name: Terraform Format Check
         working-directory: infra/azure/env/dev
         run: terraform fmt -check
@@ -34,7 +48,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Checkov - Terraform
         uses: bridgecrewio/checkov-action@master
         with:
@@ -49,7 +62,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Checkov - Kubernetes
         uses: bridgecrewio/checkov-action@master
         with:
@@ -67,10 +79,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install Semgrep
         run: pip install --upgrade semgrep
-
       - name: Run Semgrep (OSS rules)
         continue-on-error: true
         run: |
@@ -82,7 +92,6 @@ jobs:
             --config p/docker \
             --config p/github-actions \
             --sarif > semgrep.sarif
-
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         if: always()
@@ -95,6 +104,27 @@ jobs:
     steps:
       - name: Checkout (optional)
         uses: actions/checkout@v4
+      - name: Azure login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Show current account (whoami)
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az account show --output table
+            az account get-access-token --resource https://management.azure.com/ --query expiresOn -o tsv
+
+  # 👇 New on-demand Prowler job (runs ONLY when manually triggered)
+  prowler-azure-on-demand:
+    if: github.event_name == 'workflow_dispatch'
+    name: Prowler (Azure) - On Demand
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (optional)
+        uses: actions/checkout@v4
 
       - name: Azure login via OIDC
         uses: azure/login@v2
@@ -103,10 +133,51 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # Use the official CLI action to ensure 'az' is available
-      - name: Show current account (whoami)
-        uses: azure/cli@v2
+      - name: Install Prowler
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install "prowler>=4.0.0"
+
+      - name: Run Prowler (Azure)
+        id: prowler
+        env:
+          SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          FRAMEWORKS: ${{ github.event.inputs.frameworks }}
+          RGs: ${{ github.event.inputs.resource_groups }}
+          FAIL_ON: ${{ github.event.inputs.fail_on_findings }}
+        run: |
+          mkdir -p reports
+          # Build args
+          ARGS="azure --subscription-ids $SUBSCRIPTION_ID -M sarif,json -o reports"
+          if [ -n "$FRAMEWORKS" ]; then
+            # multiple CSV frameworks are supported: cis_azure,nist_800_53_rev5
+            for f in $(echo "$FRAMEWORKS" | tr ',' ' '); do
+              ARGS="$ARGS -f $f"
+            done
+          fi
+          if [ -n "$RGs" ]; then
+            ARGS="$ARGS --azure-resource-group-names $RGs"
+          fi
+
+          echo "Running: prowler $ARGS"
+          set +e
+          prowler $ARGS
+          RC=$?
+          set -e
+
+          # Optionally fail job on findings (basic check: non-zero exit OR severity count in JSON)
+          if [ "$FAIL_ON" = "true" ] && [ $RC -ne 0 ]; then
+            echo "Prowler returned non-zero and fail_on_findings=true — failing job."
+            exit $RC
+          fi
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
         with:
-          inlineScript: |
-            az account show --output table
-            az account get-access-token --resource https://management.azure.com/ --query expiresOn -o tsv
+          sarif_file: reports/prowler-azure.sarif
+
+      - name: Upload raw reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: prowler-azure-reports
+          path: reports/*

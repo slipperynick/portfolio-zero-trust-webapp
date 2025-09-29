@@ -130,13 +130,8 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
 ### 5. Observability & Response  
 **Zero Trust Pillar: Visibility & Analytics**
 
-- SIEM: ***Elastic Cloud SIEM***
-- Defender for Cloud: runtime detection, compliance monitoring  
-- Metrics & dashboards: Datadog or Prometheus + Grafana  
-- Alerts: CrashLoopBackOff, OOMKills, Kyverno admission denials, WAF blocks  
-- Threat intel feeds integrated into SIEM (optional)  
-- Incident response runbooks defined (optional)  
-- SOAR automation for playbooks (optional)
+- Logs: ***SumoLogic*** (Optional: Hosted ElasticSearch & Datadog)
+
 
 ---
 
@@ -189,3 +184,5 @@ This lab demonstrates how to apply **Zero Trust principles across all pillars** 
 - [Semgrep ruleset](https://semgrep.dev/r)
 - [Github CodeQL](https://codeql.github.com)
 - [Github Azure OIDC](https://github.com/Azure/login?tab=readme-ov-file#login-with-openid-connect-oidc-recommended)
+- [Starship Shell](https://starship.rs)
+- 
