@@ -58,7 +58,7 @@ Each section below maps to one or more Zero Trust pillars (Identity, Endpoint, N
 - Managed Identities for VMs and services
 
 **Platform Federation**
-- GitHub OIDC → Azure (CI/CD pipelines, secretless)
+- ✅ GitHub OIDC → Azure (CI/CD pipelines, secretless)
 - ✅ Terraform Cloud OIDC → Azure (IaC pipelines, secretless)
 
 **In-Cluster Authorization**
